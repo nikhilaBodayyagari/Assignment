@@ -1,3 +1,4 @@
+
 import requests
 
 def get_weather_data(location):
@@ -7,22 +8,22 @@ def get_weather_data(location):
     if response.status_code == 200:
         return response.json()
     else:
-        print("Error: Failed to fetch data from the API.")
+        print("Failed to fetch data from API.")
         return None
 
-def get_temp_by_date(data, date):
+def get_temp(data, date):
     for forecast in data["list"]:
         if date in forecast["dt_txt"]:
             return forecast["main"]["temp"]
     return None
 
-def get_wind_speed_by_date(data, date):
+def get_windSpeed(data, date):
     for forecast in data["list"]:
         if date in forecast["dt_txt"]:
             return forecast["wind"]["speed"]
     return None
 
-def get_pressure_by_date(data, date):
+def get_pressure(data, date):
     for forecast in data["list"]:
         if date in forecast["dt_txt"]:
             return forecast["main"]["pressure"]
@@ -42,21 +43,21 @@ if __name__ == "__main__":
 
         if option == "1":
             date = input("Enter the date (YYYY-MM-DD HH:MM:SS): ")
-            temp = get_temp_by_date(weather_data, date)
+            temp = get_temp(weather_data, date)
             if temp is not None:
                 print(f"The temperature at {date} is {temp} Kelvin.")
             else:
                 print("Data not available for the given date.")
         elif option == "2":
             date = input("Enter the date (YYYY-MM-DD HH:MM:SS): ")
-            wind_speed = get_wind_speed_by_date(weather_data, date)
+            wind_speed = get_windSpeed(weather_data, date)
             if wind_speed is not None:
                 print(f"The wind speed at {date} is {wind_speed} m/s.")
             else:
                 print("Data not available for the given date.")
         elif option == "3":
             date = input("Enter the date (YYYY-MM-DD HH:MM:SS): ")
-            pressure = get_pressure_by_date(weather_data, date)
+            pressure = get_pressure(weather_data, date)
             if pressure is not None:
                 print(f"The pressure at {date} is {pressure} hPa.")
             else:
